@@ -11,6 +11,14 @@ This is a full-stack task management application built with a **React frontend**
 - Secure backend with environment-based configuration
 - Modern UI built with React and Vite
 
+
+## 🌐 Live Links
+
+- **Frontend:** [https://centric-africa-task.vercel.app](https://centric-africa-task.vercel.app)
+- **Backend API:** [https://centric-africa-task.onrender.com](https://centric-africa-task.onrender.com)
+
+
+
 ## 📁 Project Structure
 
 ```
