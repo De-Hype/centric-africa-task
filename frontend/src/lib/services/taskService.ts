@@ -1,7 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import getAccessToken from "../cookies/getAccessToken";
-const baseURL = "http://localhost:8200/v1/api/tasks";
+const baseURL = "https://centric-africa-task.onrender.com/v1/api/tasks";
 
 export type TaskDataType = {
   _id: string;

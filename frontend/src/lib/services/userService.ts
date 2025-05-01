@@ -3,7 +3,7 @@ import getAccessToken from "../cookies/getAccessToken";
 import { LoginInputType, RegisterInputType } from "../../interfaces/IUser";
 import toast from "react-hot-toast";
 
-const baseURL = "http://localhost:8200/v1/api/auth";
+const baseURL = "https://centric-africa-task.onrender.com/v1/api/auth";
 
 export const CreateAccountAPI = async (data: RegisterInputType) => {
   // const token = getAccessToken();
