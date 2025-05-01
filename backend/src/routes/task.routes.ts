@@ -1,22 +1,28 @@
 import express from "express";
 import Limiter from "../middleware/rateLimit";
 import validate from "../middleware/validateZod";
-import { loginSchema, registerSchema } from "../validations/authValidations";
 
 import "./../swagger/auth.swagger"; // Ensure the path is correct
 import {
+  claimTaskHandler,
   createTaskHandler,
   deleteTaskHandler,
-  editTaskHandler,
-  fetchTaskHandler,
-  pickTaskHandler,
+  getAllTasksHandler,
+  getTaskByIdHandler,
+  unclaimTaskHandler,
+  updateTaskHandler,
 } from "../controllers/task.controller";
+import VerifyAccessToken from "../middleware/verifyAccessToken";
+import { createTaskSchema, updateTaskSchema } from "../validations/taskValidations";
 
 const router = express.Router();
-router.get("/", Limiter,  fetchTaskHandler);
-router.post("/", Limiter, validate(registerSchema), createTaskHandler);
-router.put("/:id", Limiter, validate(registerSchema), editTaskHandler);
-router.delete("/:id", Limiter, validate(registerSchema), deleteTaskHandler);
-router.patch("/assign/:id", Limiter, validate(loginSchema), pickTaskHandler);
+
+router.post("/", Limiter, validate(createTaskSchema), VerifyAccessToken, createTaskHandler);
+router.get("/", Limiter, VerifyAccessToken, getAllTasksHandler);
+router.get("/:taskId", Limiter, VerifyAccessToken, getTaskByIdHandler);
+router.patch("/:taskId/claim", Limiter, VerifyAccessToken, claimTaskHandler);
+router.patch("/:taskId/unclaim", Limiter, VerifyAccessToken, unclaimTaskHandler);
+router.put("/:taskId", Limiter,validate(updateTaskSchema), VerifyAccessToken, updateTaskHandler);
+router.delete("/:taskId", Limiter, VerifyAccessToken, deleteTaskHandler);
 
 export default router;

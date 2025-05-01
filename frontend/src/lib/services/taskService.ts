@@ -30,19 +30,11 @@ export const fetchTasks = async () => {
 
 // Create a new task
 export const createTask = async (taskData) => {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 500));
-
-  const newTask = {
-    id: generateId(),
-    ...taskData,
-  };
-
-  const tasks = getStoredTasks();
-  tasks.push(newTask);
-  saveTasks(tasks);
-
-  return newTask;
+  try {
+    
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 // Claim a task

@@ -11,6 +11,7 @@ import helmet from "helmet";
 // Import your existing configurations and middleware
 import ConnectDB from "./src/config/db.config";
 import authRoutes from "./src/routes/auth.routes";
+import  taskRoutes from "./src/routes/task.routes"
 import logger, { logRequest } from "./src/middleware/logger";
 import { COOKIE_SECRET, PORT } from "./serviceUrl";
 import AppError from "./src/errors/AppError";
@@ -49,6 +50,7 @@ app.use(swaggerRouter);
 
 // All Routes come in Here
 app.use("/v1/api/auth", authRoutes);
+app.use("/v1/api/tasks", taskRoutes);
 
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.send("Hi");
