@@ -46,7 +46,9 @@ export const useTaskStore = create<TaskStore>((set) => ({
     try {
       set({ loading: true });
       const { data } = await fetchTasks();
-      const tasks: ITask[] = data;  
+      const tasks: ITask[] = data; 
+      console.log(userId)
+ 
       set({
         availableTasks: tasks.filter(task => !task.assignedTo),
         myTasks: tasks.filter(

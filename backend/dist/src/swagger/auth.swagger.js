@@ -7,7 +7,7 @@
  */
 /**
  * @swagger
- * /register:
+ * /auth/register:
  *   post:
  *     summary: Register a new user
  *     tags: [Auth]
@@ -32,7 +32,7 @@
  */
 /**
  * @swagger
- * /sign-in:
+ * /auth/sign-in:
  *   patch:
  *     summary: Sign in a user
  *     tags: [Auth]

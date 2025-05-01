@@ -17,9 +17,9 @@ import { createTaskSchema, updateTaskSchema } from "../validations/taskValidatio
 
 const router = express.Router();
 
-router.post("/", Limiter, validate(createTaskSchema), VerifyAccessToken, createTaskHandler);
-router.get("/", Limiter, VerifyAccessToken, getAllTasksHandler);
-router.get("/:taskId", Limiter, VerifyAccessToken, getTaskByIdHandler);
+router.post("/",  validate(createTaskSchema), VerifyAccessToken, createTaskHandler);
+router.get("/",  VerifyAccessToken, getAllTasksHandler);
+router.get("/:taskId",  VerifyAccessToken, getTaskByIdHandler);
 router.patch("/:taskId/claim", Limiter, VerifyAccessToken, claimTaskHandler);
 router.patch("/:taskId/unclaim", Limiter, VerifyAccessToken, unclaimTaskHandler);
 router.put("/:taskId", Limiter,validate(updateTaskSchema), VerifyAccessToken, updateTaskHandler);

@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import {  useEffect, useState } from 'react';
 import TaskList from '../../components/tasks/TaskList';
 import { useTaskStore } from '../../lib/store/taskStore';
 
@@ -6,6 +6,9 @@ import { useTaskStore } from '../../lib/store/taskStore';
 function AvailableTasks() {
   const { availableTasks, loading, error, refreshTasks } =  useTaskStore();
   const [searchTerm, setSearchTerm] = useState('');
+  useEffect(() => {
+      refreshTasks()
+    }, [])
   
   const filteredTasks = availableTasks.filter(task => 
     task.name.toLowerCase().includes(searchTerm.toLowerCase()) || 

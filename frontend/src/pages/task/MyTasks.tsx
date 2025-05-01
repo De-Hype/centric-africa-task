@@ -1,27 +1,36 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
-import { useState } from 'react';
-import TaskList from '../../components/tasks/TaskList';
-import { useTaskStore } from '../../lib/store/taskStore';
-
+import { useEffect, useState } from "react";
+import TaskList from "../../components/tasks/TaskList";
+import { useTaskStore } from "../../lib/store/taskStore";
 
 function MyTasks() {
-  const { myTasks, loading, error, refreshTasks } =  useTaskStore();
-  const [searchTerm, setSearchTerm] = useState('');
-  const filteredTasks = myTasks.filter(task => 
-    task.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    task.description.toLowerCase().includes(searchTerm.toLowerCase())
+  const { myTasks, loading, error, refreshTasks } = useTaskStore();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  useEffect(() => {
+    refreshTasks();
+  }, []);
+  const filteredTasks = myTasks.filter(
+    (task) =>
+      task.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">My Tasks</h1>
-        <button 
+        <button
           onClick={refreshTasks}
           className="flex items-center text-indigo-600 hover:text-indigo-500"
         >
-          <svg className="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg
+            className="w-5 h-5 mr-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -32,7 +41,7 @@ function MyTasks() {
           Refresh
         </button>
       </div>
-      
+
       {error && (
         <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-md">
           {error}
@@ -42,7 +51,12 @@ function MyTasks() {
       <div className="mb-6">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg
+              className="h-5 w-5 text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

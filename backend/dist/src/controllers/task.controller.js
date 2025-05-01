@@ -31,7 +31,6 @@ exports.createTaskHandler = (0, catchAsync_1.default)((req, res, next) => __awai
         budget,
         creator: user.id,
     });
-    console.log(task, "This is the task");
     yield task.save();
     return (0, AppResponse_1.default)(res, "Task has been created successfully.", 201, task);
 }));
@@ -39,7 +38,6 @@ exports.getAllTasksHandler = (0, catchAsync_1.default)((req, res, next) => __awa
     const tasks = yield task_model_1.default.find()
         .populate("creator", "username email")
         .populate("assignedTo", "username email");
-    console.log(tasks);
     return (0, AppResponse_1.default)(res, "Tasks fetched successfully.", 200, tasks);
 }));
 exports.getTaskByIdHandler = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -57,7 +55,6 @@ exports.claimTaskHandler = (0, catchAsync_1.default)((req, res, next) => __await
     const user = req.user;
     const session = yield mongoose_1.default.startSession();
     session.startTransaction();
-    console.log(user, "THis is the user");
     try {
         const task = yield task_model_1.default.findOneAndUpdate({
             _id: taskId,
