@@ -34,7 +34,6 @@ interface TaskStore {
   unclaimTaskById: (taskId: string) => Promise<ITask>;
 }
 
-const userId = getUserId()
 
 export const useTaskStore = create<TaskStore>((set) => ({
   availableTasks: [],
@@ -47,12 +46,11 @@ export const useTaskStore = create<TaskStore>((set) => ({
       set({ loading: true });
       const { data } = await fetchTasks();
       const tasks: ITask[] = data; 
-      console.log(userId)
  
       set({
         availableTasks: tasks.filter(task => !task.assignedTo),
         myTasks: tasks.filter(
-          task => task.assignedTo && task.assignedTo._id === userId
+          task => task.assignedTo && task.assignedTo._id === getUserId()
         ),      
         error: null,
       });

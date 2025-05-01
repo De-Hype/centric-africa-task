@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import TaskList from "../../components/tasks/TaskList";
 import { useTaskStore } from "../../lib/store/taskStore";
 
@@ -8,9 +8,6 @@ function MyTasks() {
   const { myTasks, loading, error, refreshTasks } = useTaskStore();
 
   const [searchTerm, setSearchTerm] = useState("");
-  useEffect(() => {
-    refreshTasks();
-  }, []);
   const filteredTasks = myTasks.filter(
     (task) =>
       task.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
