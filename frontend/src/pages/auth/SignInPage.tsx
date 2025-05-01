@@ -20,7 +20,6 @@ const SignInPage: React.FC = () => {
   });
   const navigate = useNavigate();
   const onSubmit = async (data: LoginFormInputs) => {
-    console.log("Form Data:", data);
     try {
       const response = await LoginAccountAPI(data);
       storeAccessToken(response.data.refreshToken);

@@ -15,7 +15,6 @@ const ProtectedRoute = () => {
       if (!token) return setLoading(false);
       try {
         const userData = await FetchMyAccountAPI(); 
-        console.log(userData.data, "This is user data")
         setUser(userData.data);
       } catch {
         setUser(null);
