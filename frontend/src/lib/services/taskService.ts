@@ -1,7 +1,8 @@
-// For demo purposes, we'll use localStorage as a mock database
-// In a real application, these would be API calls to the backend
-
-// Helper to get all tasks from localStorage
+import axios from "axios";
+import toast from "react-hot-toast";
+import getAccessToken from "../cookies/getAccessToken";
+import ITask from "../../interfaces/ITask";
+const baseURL = "http://localhost:8200/v1/api/tasks";
 
 const getStoredTasks = () => {
   const tasks = localStorage.getItem("tasks");
@@ -28,12 +29,34 @@ export const fetchTasks = async () => {
   return getStoredTasks();
 };
 
-// Create a new task
 export const createTask = async (taskData) => {
+  const token = getAccessToken();
+  const headers = token
+    ? {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      }
+    : {
+        "Content-Type": "application/json",
+      };
+  console.log(taskData);
+
   try {
-    
+    const url = `${baseURL}/`;
+    const response = await axios.post(
+      url,
+      {
+        name: taskData.title,
+        description: taskData.description,
+        budget: String(taskData.budget),
+      },
+      { headers }
+    );
+    return response.data;
   } catch (error) {
-    console.log(error)
+    console.error("Account creation failed:", error);
+    toast.error("Error creating a task");
+    throw error;
   }
 };
 

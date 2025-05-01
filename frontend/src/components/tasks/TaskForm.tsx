@@ -78,8 +78,8 @@ function TaskForm() {
         </label>
         <input
           type="text"
-          id="name"
-          name="name"
+          id="title"
+          name="title"
           value={formData.title}
           onChange={handleChange}
           className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
