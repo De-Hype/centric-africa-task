@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../lib/store/userStore';
 import removeAccessToken from '../../lib/cookies/removeAccessToken';
 import { HiLogout } from 'react-icons/hi';  // Import the logout icon from react-icons
+import { removeUserId } from '../../lib/cookies/userIdCookies';
 
 function Header() {
   const { user } = useUserStore();
@@ -9,6 +10,7 @@ function Header() {
   
   const handleLogOut = () => {
     removeAccessToken();
+    removeUserId()
     navigate('/sign-in')
   };
 

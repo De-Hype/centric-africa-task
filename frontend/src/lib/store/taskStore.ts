@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { fetchTasks, createTask, claimTask, unclaimTask } from '../services/taskService';
-import { useUserStore } from './userStore';
+import { getUserId } from '../cookies/userIdCookies';
 
 export default interface ITask {
   _id: string;
@@ -34,8 +34,7 @@ interface TaskStore {
   unclaimTaskById: (taskId: string) => Promise<ITask>;
 }
 
-const { user } = useUserStore.getState();
-const userId = user?._id;
+const userId = getUserId()
 
 export const useTaskStore = create<TaskStore>((set) => ({
   availableTasks: [],

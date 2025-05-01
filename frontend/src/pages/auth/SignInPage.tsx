@@ -7,6 +7,7 @@ import { LoginAccountAPI } from "../../lib/services/userService";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import storeAccessToken from "../../lib/cookies/storeAccessToken";
+import { storeUserId } from "../../lib/cookies/userIdCookies";
 
 type LoginFormInputs = z.infer<typeof loginSchema>;
 
@@ -22,6 +23,7 @@ const SignInPage: React.FC = () => {
   const onSubmit = async (data: LoginFormInputs) => {
     try {
       const response = await LoginAccountAPI(data);
+      storeUserId(response.data.account.id)
       storeAccessToken(response.data.refreshToken);
       navigate("/");
       toast.success("Account created successfully!");
