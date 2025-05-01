@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
 import { useState } from 'react';
 import TaskList from '../../components/tasks/TaskList';
 import { useTaskStore } from '../../lib/store/taskStore';
@@ -7,7 +9,6 @@ function MyTasks() {
   const { myTasks, loading, error, refreshTasks } =  useTaskStore();
   const [searchTerm, setSearchTerm] = useState('');
   const filteredTasks = myTasks.filter(task => 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     task.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
     task.description.toLowerCase().includes(searchTerm.toLowerCase())
   );

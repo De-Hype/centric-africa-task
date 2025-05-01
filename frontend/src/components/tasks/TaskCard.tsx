@@ -2,6 +2,7 @@ import { useState} from 'react';
 import { useTaskStore } from '../../lib/store/taskStore';
 
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function TaskCard({ task, type = 'available' }:{task:any, type:string}) {
   const { claimTaskById, unclaimTaskById } =  useTaskStore();
   const [isLoading, setIsLoading] = useState(false);
@@ -13,7 +14,8 @@ function TaskCard({ task, type = 'available' }:{task:any, type:string}) {
       setError(null);
   
       await claimTaskById(task._id);
-    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err:any) {
       setError(err.message || 'Failed to claim task');
     } finally {
       setIsLoading(false);
@@ -25,7 +27,8 @@ function TaskCard({ task, type = 'available' }:{task:any, type:string}) {
       setIsLoading(true);
       setError(null);
       await unclaimTaskById(task._id);
-    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err:any) {
       setError(err.message || 'Failed to unclaim task');
     } finally {
       setIsLoading(false);

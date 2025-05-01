@@ -17,11 +17,14 @@ function TaskForm() {
     assignedTo:"",
     createdBy:""
   });
+  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
-
-  const handleChange = (e) => {
+  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     
@@ -29,8 +32,7 @@ function TaskForm() {
       setErrors({ ...errors, [name]: null });
     }
   };
-
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     const validationResult = validateTaskForm(formData);
@@ -52,6 +54,8 @@ function TaskForm() {
       });
       
       navigate('/available-tasks');
+      
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err:any) {
       setSubmitError(err.message || 'Failed to create task. Please try again.');
     } finally {

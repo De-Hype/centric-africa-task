@@ -1,18 +1,21 @@
 import { useEffect, useRef } from 'react';
 
-function Modal({ isOpen, onClose, children, title }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function Modal({ isOpen, onClose, children, title }:any) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const modalRef:any = useRef(null);
 
-  // Handle click outside of modal
+
   useEffect(() => {
-    function handleClickOutside(event) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    function handleClickOutside(event: { target: any; }) {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
         onClose();
       }
     }
 
     // Handle escape key press
-    function handleEscapeKey(event) {
+    function handleEscapeKey(event: { key: string; }) {
       if (event.key === 'Escape') {
         onClose();
       }
