@@ -6,9 +6,11 @@ import { useTaskStore } from '../../lib/store/taskStore';
 function MyTasks() {
   const { myTasks, loading, error, refreshTasks } =  useTaskStore();
   const [searchTerm, setSearchTerm] = useState('');
+  console.log(myTasks)
   
+  console.log(myTasks, "Could be it")
   const filteredTasks = myTasks.filter(task => 
-    task.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    task.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
     task.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 

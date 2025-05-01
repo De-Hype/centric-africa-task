@@ -10,7 +10,8 @@ function TaskCard({ task, type = 'available' }) {
     try {
       setIsLoading(true);
       setError(null);
-      await claimTaskById(task.id);
+  
+      await claimTaskById(task._id);
     } catch (err) {
       setError(err.message || 'Failed to claim task');
     } finally {
@@ -22,7 +23,7 @@ function TaskCard({ task, type = 'available' }) {
     try {
       setIsLoading(true);
       setError(null);
-      await unclaimTaskById(task.id);
+      await unclaimTaskById(task._id);
     } catch (err) {
       setError(err.message || 'Failed to unclaim task');
     } finally {

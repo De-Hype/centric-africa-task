@@ -7,6 +7,7 @@ function AvailableTasks() {
   const { availableTasks, loading, error, refreshTasks } =  useTaskStore();
   const [searchTerm, setSearchTerm] = useState('');
   
+  console.log(availableTasks, "Available")
   const filteredTasks = availableTasks.filter(task => 
     task.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
     task.description.toLowerCase().includes(searchTerm.toLowerCase())

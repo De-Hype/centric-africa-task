@@ -1,10 +1,14 @@
+
+//@ts-nocheck
 import { create } from 'zustand';
 import { fetchTasks, createTask, claimTask, unclaimTask } from '../services/taskService';
 import ITask from '../../interfaces/ITask';
+import { useUserStore } from './userStore';
 
 
 interface TaskStore {
-  availableTasks: ITask[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  availableTasks: any[];
   myTasks: ITask[];
   loading: boolean;
   error: string | null;
@@ -13,10 +17,11 @@ interface TaskStore {
   claimTaskById: (taskId: string) => Promise<ITask>;
   unclaimTaskById: (taskId: string) => Promise<ITask>;
 }
+const { user } = useUserStore.getState();
 
-const userId = "user123"; // Replace this with a real user context or auth logic
+const userId = user?._id; // Replace this with a real user context or auth logic
 
-export const useTaskStore = create<TaskStore>((set, get) => ({
+export const useTaskStore = create<TaskStore>((set) => ({
   availableTasks: [],
   myTasks: [],
   loading: false,
@@ -26,10 +31,13 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
     try {
       set({ loading: true });
       const {data }=await fetchTasks();
+      console.log(data,"We are here")
       const tasks:ITask[] = data
+      console.log(tasks,"We are here too")
+      console.log(userId)
       set({
         availableTasks: tasks.filter(task => !task.assignedTo),
-        myTasks: tasks.filter(task => task.assignedTo === userId),
+        myTasks: tasks.filter(task => task?.assignedTo?._id === userId),
         error: null,
       });
     } catch (err) {
@@ -43,12 +51,13 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
   addTask: async (taskData) => {
     try {
       set({ loading: true });
-      const newTask = await createTask({
+      const {data} = await createTask({
         ...taskData,
         createdBy: userId,
         createdAt: new Date().toISOString(),
         assignedTo: null,
       });
+      const newTask = data;
       set((state) => ({
         availableTasks: [...state.availableTasks, newTask],
       }));
@@ -65,7 +74,8 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
   claimTaskById: async (taskId) => {
     try {
       set({ loading: true });
-      const updatedTask = await claimTask(taskId, userId);
+      const {data } = await claimTask(taskId);
+      const updatedTask = data;
       set((state) => ({
         availableTasks: state.availableTasks.filter(task => task._id !== taskId),
         myTasks: [...state.myTasks, updatedTask],
@@ -83,7 +93,8 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
   unclaimTaskById: async (taskId) => {
     try {
       set({ loading: true });
-      const updatedTask = await unclaimTask(taskId);
+      const {data } = await unclaimTask(taskId);
+      const updatedTask = data
       set((state) => ({
         myTasks: state.myTasks.filter(task => task._id !== taskId),
         availableTasks: [...state.availableTasks, updatedTask],

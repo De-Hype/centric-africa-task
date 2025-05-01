@@ -35,6 +35,7 @@ export const getAllTasksHandler = catchAsync(
     const tasks = await Task.find()
       .populate("creator", "username email")
       .populate("assignedTo", "username email");
+      console.log(tasks)
 
     return AppResponse(res, "Tasks fetched successfully.", 200, tasks);
   }
@@ -64,7 +65,7 @@ export const claimTaskHandler = catchAsync(
     const user = req.user as any;
     const session = await mongoose.startSession();
     session.startTransaction();
-
+    console.log(user, "THis is the user")
     try {
       const task = await Task.findOneAndUpdate(
         {
@@ -114,17 +115,6 @@ export const unclaimTaskHandler = catchAsync(
       { $unset: { assignedTo: "" } }, 
       { new: true }
     ).populate("creator", "username email");
-
-    if (!task) {
-      const existingTask = await Task.findById(taskId);
-      if (!existingTask) {
-        return next(new AppError("Task not found", 404));
-      } else {
-        return next(
-          new AppError("You are not authorized to unclaim this task", 403)
-        );
-      }
-    }
 
     return AppResponse(res, "Task unclaimed successfully.", 200, task);
   }

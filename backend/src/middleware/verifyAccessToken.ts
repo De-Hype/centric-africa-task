@@ -16,7 +16,6 @@ const VerifyAccessToken = async (
   next: NextFunction
 ) => {
   let token: string | undefined;
-
   if (!req.headers.authorization) {
     return next(new AppError("No authorization header provided", 401));
   }
