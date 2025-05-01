@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "app.ts",
   "scripts": {
-    "test": "",
+   "build": "tsc",
+    "stage": "tsc && git add .",
     "dev": "nodemon app.ts",
     "start": "node dist/app.js",
-    "stage": "tsc && git add ."
+    "postinstall": "tsc"
   },
   "keywords": [],
   "author": "",

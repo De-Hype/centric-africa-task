@@ -36,7 +36,6 @@ exports.registerHandler = (0, catchAsync_1.default)((req, res, next) => __awaite
         id: user._id,
         email: email,
     };
-    //Email will be sent to the user
     return (0, AppResponse_1.default)(res, "Your account has been created successfully.", 201, account);
 }));
 exports.loginHandler = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -54,7 +53,6 @@ exports.loginHandler = (0, catchAsync_1.default)((req, res, next) => __awaiter(v
     };
     const accessToken = (0, GenerateToken_1.GenerateAccessToken)(account);
     const refreshToken = (0, GenerateToken_1.GenerateRefreshToken)(account);
-    //Email will be sent to the user
     return (0, AppResponse_1.default)(res, "User log in successful.", 200, {
         accessToken: accessToken,
         refreshToken: refreshToken,
