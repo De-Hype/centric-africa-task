@@ -1,18 +1,26 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import getAccessToken from "../cookies/getAccessToken";
-const baseURL = "https://centric-africa-task.onrender.com/v1/api/tasks";
+import APP_URI from "./AppURI";
+const baseURL =   `${APP_URI}/v1/api/tasks`;
 
 export type TaskDataType = {
-  _id: string;
+  _id: string |null;
   title: string;
   description: string;
   budget: number;
-  createdBy: string;
-  createdAt?: Date;
+ 
+  createdAt?: Date | string | undefined;
   updatedAt?: Date;
   assignedTo: string | null;
 };
+type CreateTaskInput = {
+  title: string;
+  description: string;
+  budget: number;
+};
+
+
 export const fetchTasks = async () => {
   const token = getAccessToken();
   const headers = token
@@ -40,7 +48,7 @@ export const fetchTasks = async () => {
   }
 };
 
-export const createTask = async (taskData: TaskDataType) => {
+export const createTask = async (taskData: CreateTaskInput) => {
   const token = getAccessToken();
   const headers = token
     ? {

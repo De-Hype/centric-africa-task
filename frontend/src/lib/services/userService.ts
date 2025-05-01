@@ -2,20 +2,11 @@ import axios from "axios";
 import getAccessToken from "../cookies/getAccessToken";
 import { LoginInputType, RegisterInputType } from "../../interfaces/IUser";
 import toast from "react-hot-toast";
+import APP_URI from "./AppURI";
 
-const baseURL = "https://centric-africa-task.onrender.com/v1/api/auth";
+const baseURL = `${APP_URI}/v1/api/auth`
 
 export const CreateAccountAPI = async (data: RegisterInputType) => {
-  // const token = getAccessToken();
-  // const headers = token
-  //   ? {
-  //       Authorization: `Bearer ${token}`,
-  //       "Content-Type": "application/json",
-  //     }
-  //   : {
-  //       "Content-Type": "application/json",
-  //     };
-
   const headers = {
     "Content-Type": "application/json",
   };
@@ -40,16 +31,6 @@ export const CreateAccountAPI = async (data: RegisterInputType) => {
 };
 
 export const LoginAccountAPI = async (data: LoginInputType) => {
-  // const token = getAccessToken();
-  // const headers = token
-  //   ? {
-  //       Authorization: `Bearer ${token}`,
-  //       "Content-Type": "application/json",
-  //     }
-  //   : {
-  //       "Content-Type": "application/json",
-  //     };
-
   const headers = {
     "Content-Type": "application/json",
   };

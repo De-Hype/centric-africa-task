@@ -1,78 +1,78 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useTaskStore } from '../../lib/store/taskStore';
-import { validateTaskForm } from '../../lib/validations/validateTaskForm';
-
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useTaskStore } from "../../lib/store/taskStore";
+import { validateTaskForm } from "../../lib/validations/validateTaskForm";
 
 function TaskForm() {
   const navigate = useNavigate();
-  const { addTask } =  useTaskStore();
+  const { addTask } = useTaskStore();
   const [formData, setFormData] = useState({
-    _id:"",
-    title: '',
-    description: '',
-    budget: '',
-    createdAt:"",
-    updatedAt:"",
-    assignedTo:"",
-    createdBy:""
+    _id: "",
+    title: "",
+    description: "",
+    budget: "",
+    createdAt: "",
+    updatedAt: "",
+    assignedTo: "",
+    createdBy: "",
   });
-  
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
-  
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    
+
     if (errors[name]) {
       setErrors({ ...errors, [name]: null });
     }
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const validationResult = validateTaskForm(formData);
     if (!validationResult.success) {
       setErrors(validationResult.errors);
       return;
     }
-    
+
     try {
       setIsSubmitting(true);
       setSubmitError(null);
-      
-      await addTask({
-        _id:formData._id,
-        budget:Number(formData.budget),
-        description:formData.description,
-        title:formData.title,
 
+      await addTask({
+        name: formData.title,
+        budget: Number(formData.budget),
+        description: formData.description,
       });
-      
-      navigate('/available-tasks');
-      
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err:any) {
-      setSubmitError(err.message || 'Failed to create task. Please try again.');
+
+      navigate("/available-tasks");
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      setSubmitError(err.message || "Failed to create task. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-8">
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-8"
+    >
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Create New Task</h2>
-      
+
       {submitError && (
         <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-md">
           {submitError}
         </div>
       )}
-      
+
       <div className="mb-6">
         <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
           Task Name
@@ -84,7 +84,9 @@ function TaskForm() {
           value={formData.title}
           onChange={handleChange}
           className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-            errors.title ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-indigo-200'
+            errors.title
+              ? "border-red-500 focus:ring-red-200"
+              : "border-gray-300 focus:ring-indigo-200"
           }`}
           placeholder="Enter task name"
         />
@@ -92,9 +94,12 @@ function TaskForm() {
           <p className="mt-1 text-red-600 text-sm">{errors.title}</p>
         )}
       </div>
-      
+
       <div className="mb-6">
-        <label htmlFor="description" className="block text-gray-700 font-medium mb-2">
+        <label
+          htmlFor="description"
+          className="block text-gray-700 font-medium mb-2"
+        >
           Description
         </label>
         <textarea
@@ -103,7 +108,9 @@ function TaskForm() {
           value={formData.description}
           onChange={handleChange}
           className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-            errors.description ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-indigo-200'
+            errors.description
+              ? "border-red-500 focus:ring-red-200"
+              : "border-gray-300 focus:ring-indigo-200"
           }`}
           placeholder="Enter task description"
           rows={4}
@@ -112,9 +119,12 @@ function TaskForm() {
           <p className="mt-1 text-red-600 text-sm">{errors.description}</p>
         )}
       </div>
-      
+
       <div className="mb-8">
-        <label htmlFor="budget" className="block text-gray-700 font-medium mb-2">
+        <label
+          htmlFor="budget"
+          className="block text-gray-700 font-medium mb-2"
+        >
           Budget ($)
         </label>
         <input
@@ -124,7 +134,9 @@ function TaskForm() {
           value={formData.budget}
           onChange={handleChange}
           className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-            errors.budget ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-indigo-200'
+            errors.budget
+              ? "border-red-500 focus:ring-red-200"
+              : "border-gray-300 focus:ring-indigo-200"
           }`}
           placeholder="Enter task budget"
         />
@@ -132,7 +144,7 @@ function TaskForm() {
           <p className="mt-1 text-red-600 text-sm">{errors.budget}</p>
         )}
       </div>
-      
+
       <div className="flex justify-end">
         <button
           type="button"
@@ -145,10 +157,12 @@ function TaskForm() {
           type="submit"
           disabled={isSubmitting}
           className={`px-6 py-2 rounded-md font-medium text-white ${
-            isSubmitting ? 'bg-indigo-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-500'
+            isSubmitting
+              ? "bg-indigo-400 cursor-not-allowed"
+              : "bg-indigo-600 hover:bg-indigo-500"
           }`}
         >
-          {isSubmitting ? 'Creating...' : 'Create Task'}
+          {isSubmitting ? "Creating..." : "Create Task"}
         </button>
       </div>
     </form>

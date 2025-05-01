@@ -21,7 +21,6 @@ export const createTaskHandler = catchAsync(
       budget,
       creator: user.id,
     });
-    console.log(task, "This is the task");
 
     await task.save();
 
@@ -35,7 +34,6 @@ export const getAllTasksHandler = catchAsync(
     const tasks = await Task.find()
       .populate("creator", "username email")
       .populate("assignedTo", "username email");
-      console.log(tasks)
 
     return AppResponse(res, "Tasks fetched successfully.", 200, tasks);
   }
@@ -65,7 +63,6 @@ export const claimTaskHandler = catchAsync(
     const user = req.user as any;
     const session = await mongoose.startSession();
     session.startTransaction();
-    console.log(user, "THis is the user")
     try {
       const task = await Task.findOneAndUpdate(
         {
