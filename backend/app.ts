@@ -36,7 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin:["http://localhost:5173", "https://centric-africa-task.vercel.app/"],
+    origin: ["http://localhost:5173", "https://centric-africa-task.vercel.app/"],
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
   })
 );
