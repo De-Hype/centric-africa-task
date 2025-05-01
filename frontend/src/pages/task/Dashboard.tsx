@@ -2,9 +2,14 @@
 //@ts-nocheck
 import { Link } from 'react-router-dom';
 import { useTaskStore } from '../../lib/store/taskStore';
+import { useEffect } from 'react';
 
 function Dashboard() {
-  const { availableTasks, myTasks, loading } =  useTaskStore();
+  const { availableTasks, myTasks, loading, refreshTasks} =  useTaskStore();
+  useEffect(() => {
+    refreshTasks()
+  }, [])
+  
  
 
   const stats = [

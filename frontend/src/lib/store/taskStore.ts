@@ -47,11 +47,12 @@ export const useTaskStore = create<TaskStore>((set) => ({
     try {
       set({ loading: true });
       const { data } = await fetchTasks();
-      const tasks: ITask[] = data;
-  
+      const tasks: ITask[] = data;  
       set({
         availableTasks: tasks.filter(task => !task.assignedTo),
-        myTasks: tasks.filter(task => task.assignedTo?._id === userId),
+        myTasks: tasks.filter(
+          task => task.assignedTo && task.assignedTo._id === userId
+        ),      
         error: null,
       });
     } catch (err) {
