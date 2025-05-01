@@ -40,6 +40,7 @@ app.use(
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
   })
 );
+app.options("*", cors()); 
 
 app.use(cookieParser(COOKIE_SECRET));
 app.use(helmet());
