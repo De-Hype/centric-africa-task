@@ -14,7 +14,7 @@ const ProtectedRoute = () => {
     const validateUser = async () => {
       if (!token) return setLoading(false);
       try {
-        const userData = await FetchMyAccountAPI(); // Call your user endpoint
+        const userData = await FetchMyAccountAPI(); 
         console.log(userData.data, "This is user data")
         setUser(userData.data);
       } catch {

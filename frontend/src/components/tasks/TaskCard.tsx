@@ -1,7 +1,8 @@
-import { useState, useContext } from 'react';
+import { useState} from 'react';
 import { useTaskStore } from '../../lib/store/taskStore';
 
-function TaskCard({ task, type = 'available' }) {
+
+function TaskCard({ task, type = 'available' }:{task:any, type:string}) {
   const { claimTaskById, unclaimTaskById } =  useTaskStore();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);

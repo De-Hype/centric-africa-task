@@ -2,7 +2,7 @@ import express from "express";
 import Limiter from "../middleware/rateLimit";
 import validate from "../middleware/validateZod";
 
-import "./../swagger/auth.swagger"; // Ensure the path is correct
+import "./../swagger/auth.swagger"; 
 import {
   claimTaskHandler,
   createTaskHandler,

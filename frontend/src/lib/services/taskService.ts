@@ -1,10 +1,18 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import getAccessToken from "../cookies/getAccessToken";
-import ITask from "../../interfaces/ITask";
 const baseURL = "http://localhost:8200/v1/api/tasks";
 
-// Fetch all tasks
+export type TaskDataType = {
+  _id: string;
+  title: string;
+  description: string;
+  budget: number;
+  createdBy: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  assignedTo: string | null;
+};
 export const fetchTasks = async () => {
   const token = getAccessToken();
   const headers = token
@@ -23,15 +31,16 @@ export const fetchTasks = async () => {
 
       { headers }
     );
-    console.log(response, "This is the response")
+    toast.success("Fetched task successfully");
     return response.data;
   } catch (error) {
-    console.error("Account fetching failed:", error);
+    toast.error("Failed to fetch tasks");
+    console.error("Failed to fetch tasks:", error);
     throw error;
   }
 };
 
-export const createTask = async (taskData) => {
+export const createTask = async (taskData: TaskDataType) => {
   const token = getAccessToken();
   const headers = token
     ? {
@@ -41,7 +50,6 @@ export const createTask = async (taskData) => {
     : {
         "Content-Type": "application/json",
       };
-  console.log(taskData);
 
   try {
     const url = `${baseURL}/`;
@@ -54,6 +62,7 @@ export const createTask = async (taskData) => {
       },
       { headers }
     );
+    toast.success("Created a task successfully");
     return response.data;
   } catch (error) {
     console.error("Account creation failed:", error);
@@ -62,77 +71,45 @@ export const createTask = async (taskData) => {
   }
 };
 
-// Claim a task
-export const claimTask = async (taskId) => {
+export const claimTask = async (taskId: string) => {
   const token = getAccessToken();
 
   const headers = {
-    "Authorization": `Bearer ${token}`,
+    Authorization: `Bearer ${token}`,
     "Content-Type": "application/json",
   };
-
 
   try {
     const url = `${baseURL}/${taskId}/claim`;
 
-    const response = await axios.patch(
-      url,
-      {}, 
-      { headers }
-    );
+    const response = await axios.patch(url, {}, { headers });
 
+    toast.success("Task claimed successfully");
     return response.data;
   } catch (error) {
-    toast.error("Error occured while claiming task")
+    toast.error("Error occured while claiming task");
     console.error("Account fetching failed:", error);
     throw error;
   }
 };
 
-export const unclaimTask  = async (taskId) => {
+export const unclaimTask = async (taskId: string) => {
   const token = getAccessToken();
 
   const headers = {
-    "Authorization": `Bearer ${token}`,
+    Authorization: `Bearer ${token}`,
     "Content-Type": "application/json",
   };
-
 
   try {
     const url = `${baseURL}/${taskId}/unclaim`;
 
-    const response = await axios.patch(
-      url,
-      {}, 
-      { headers }
-    );
-
+    const response = await axios.patch(url, {}, { headers });
+    toast.success("Unclaimed task successfully")
     return response.data;
   } catch (error) {
-    toast.error("Error occured while claiming task")
-    console.error("Account fetching failed:", error);
+    toast.error("Error occured while claiming task");
+    console.error("Error occured while claiming task:", error);
     throw error;
   }
 };
-
-
-// Unclaim a task
-// export const unclaimTask = async (taskId) => {
-//   // Simulate API delay
-//   await new Promise((resolve) => setTimeout(resolve, 500));
-
-//   const tasks = getStoredTasks();
-//   const taskIndex = tasks.findIndex((task) => task.id === taskId);
-
-//   if (taskIndex === -1) {
-//     throw new Error("Task not found");
-//   }
-
-//   // Unclaim the task
-//   tasks[taskIndex].claimedBy = null;
-//   tasks[taskIndex].claimedAt = null;
-
-//   saveTasks(tasks);
-
-//   return tasks[taskIndex];
-// };

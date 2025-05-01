@@ -1,9 +1,7 @@
-// This is a simplified version of the Zod schema for client-side validation
-// In a real application, we would use Zod directly or share validation logic between client and server
-
 import ITask from "../../interfaces/ITask";
 
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const validateTaskForm = (data:ITask|any) => {
     const errors: Partial<{
         title: string;

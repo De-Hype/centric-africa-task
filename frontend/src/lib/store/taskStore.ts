@@ -19,7 +19,7 @@ interface TaskStore {
 }
 const { user } = useUserStore.getState();
 
-const userId = user?._id; // Replace this with a real user context or auth logic
+const userId = user?._id; 
 
 export const useTaskStore = create<TaskStore>((set) => ({
   availableTasks: [],
@@ -31,10 +31,7 @@ export const useTaskStore = create<TaskStore>((set) => ({
     try {
       set({ loading: true });
       const {data }=await fetchTasks();
-      console.log(data,"We are here")
       const tasks:ITask[] = data
-      console.log(tasks,"We are here too")
-      console.log(userId)
       set({
         availableTasks: tasks.filter(task => !task.assignedTo),
         myTasks: tasks.filter(task => task?.assignedTo?._id === userId),

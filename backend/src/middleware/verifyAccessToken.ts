@@ -1,4 +1,3 @@
-//This middleware will verify the accessToken on every request made to the server
 
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";

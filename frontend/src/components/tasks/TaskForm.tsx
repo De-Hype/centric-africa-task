@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTaskStore } from '../../lib/store/taskStore';
 import { validateTaskForm } from '../../lib/validations/validateTaskForm';
@@ -25,7 +25,6 @@ function TaskForm() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     
-    // Clear error for this field when user starts typing
     if (errors[name]) {
       setErrors({ ...errors, [name]: null });
     }
@@ -34,7 +33,6 @@ function TaskForm() {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     
-    // Validate form
     const validationResult = validateTaskForm(formData);
     if (!validationResult.success) {
       setErrors(validationResult.errors);
@@ -53,7 +51,6 @@ function TaskForm() {
 
       });
       
-      // Redirect to available tasks page after successful creation
       navigate('/available-tasks');
     } catch (err:any) {
       setSubmitError(err.message || 'Failed to create task. Please try again.');

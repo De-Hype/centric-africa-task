@@ -9,7 +9,6 @@ import {
   GenerateAccessToken,
   GenerateRefreshToken,
 } from "../helpers/GenerateToken";
-import IUser from "../interfaces/IUser";
 
 export const registerHandler = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -32,7 +31,6 @@ export const registerHandler = catchAsync(
       id: user._id,
       email: email,
     };
-    //Email will be sent to the user
     return AppResponse(
       res,
       "Your account has been created successfully.",
@@ -57,7 +55,6 @@ export const loginHandler = catchAsync(
     };
     const accessToken: string | undefined = GenerateAccessToken(account);
     const refreshToken: string | undefined = GenerateRefreshToken(account);
-    //Email will be sent to the user
     return AppResponse(res, "User log in successful.", 200, {
       accessToken: accessToken,
       refreshToken: refreshToken,

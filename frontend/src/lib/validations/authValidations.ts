@@ -1,4 +1,3 @@
-//All validation for auth to be done here
 import { z } from "zod";
 export const registerSchema = z.object({
   email: z
