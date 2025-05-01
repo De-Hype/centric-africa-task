@@ -8,7 +8,7 @@ function AvailableTasks() {
   const [searchTerm, setSearchTerm] = useState('');
   
   const filteredTasks = availableTasks.filter(task => 
-    task.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    task.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
     task.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 

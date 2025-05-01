@@ -25,8 +25,8 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
   refreshTasks: async () => {
     try {
       set({ loading: true });
-      const tasks:ITask[] = await fetchTasks();
-      console.log(get)
+      const {data }=await fetchTasks();
+      const tasks:ITask[] = data
       set({
         availableTasks: tasks.filter(task => !task.assignedTo),
         myTasks: tasks.filter(task => task.assignedTo === userId),

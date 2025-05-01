@@ -89,7 +89,7 @@ function Dashboard() {
             <div className="divide-y">
               {availableTasks.slice(0, 3).map((task) => (
                 <div key={task._id} className="py-4">
-                  <h3 className="font-medium">{task.title}</h3>
+                  <h3 className="font-medium">{task.name}</h3>
                   <p className="text-sm text-gray-500 mt-1 truncate">{task.description}</p>
                 </div>
               ))}

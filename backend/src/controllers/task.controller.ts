@@ -23,7 +23,7 @@ export const createTaskHandler = catchAsync(
     });
     console.log(task, "This is the task");
 
-    // await task.save();
+    await task.save();
 
     return AppResponse(res, "Task has been created successfully.", 201, task);
   }

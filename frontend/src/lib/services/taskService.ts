@@ -24,9 +24,28 @@ const generateId = () => {
 
 // Fetch all tasks
 export const fetchTasks = async () => {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  return getStoredTasks();
+  const token = getAccessToken();
+  const headers = token
+    ? {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      }
+    : {
+        "Content-Type": "application/json",
+      };
+
+  try {
+    const url = `${baseURL}/`;
+    const response = await axios.get(
+      url,
+
+      { headers }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Account fetching failed:", error);
+    throw error;
+  }
 };
 
 export const createTask = async (taskData) => {
