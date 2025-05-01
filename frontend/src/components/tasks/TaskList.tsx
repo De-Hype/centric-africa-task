@@ -1,8 +1,8 @@
-import ITask from '../../interfaces/ITask';
 import TaskCard from './TaskCard';
 
 interface TaskListProps{
-    tasks:ITask[],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    tasks:any[],
     type:string,
     loading:boolean
 }
